@@ -66,11 +66,6 @@ RUN --mount=type=cache,target=$POETRY_CACHE_DIR \
 FROM python-base as development
 ENV FASTAPI_ENV=development
 
-# Application dependencies
-RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
-  libpq5 \
-  && rm -rf /var/lib/apt/lists/*
-
 # will become mountpoint of our code
 ENV DIR="/src"
 RUN mkdir ${DIR} && chown -fR ${USER}:${USER} ${DIR}
