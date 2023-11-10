@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "drestrepob"
+version = "1.0.0"
+description = "How to use modular database logic to load data into a database and perform CRUD operations in an App"
+authors = ["Daniel Restrepo <danielrestrepo9725@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.100.0"
+python-decouple = "^3.8"
+sqlalchemy = "^2.0.20"
+uvicorn = "^0.23.2"
+psycopg = "^3.1.12"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+mypy = "^1.5.1"
+ruff = "^0.0.290"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

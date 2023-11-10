@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  web:
+    container_name: data-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["./scripts/entrypoint.sh"]
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./app:/app
+      - ./scripts:/scripts
+      - ./tests:/tests
+
+  db:
+    container_name: data-api-db
+    image: postgres:15.3-alpine
+    ports:
+      - "40000:5432"
+    environment:
+      POSTGRES_USER: ${DATABASE_USER:-postgres}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-postgres}
+      POSTGRES_DB: ${DATABASE_NAME:-postgres}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${DATABASE_USER:-postgres}"]
+      interval: 2s
+      timeout: 4s
+      retries: 3
+    volumes:
+        - ./.pgdata:/var/lib/postgresql/data/pgdata
